@@ -1,1 +1,18 @@
-<p>request-uebersicht works!</p>
+<div class="request-overview">
+  <h2>Meine Anfragen</h2>
+
+  <!-- Wenn keine Anfragen vorhanden sind -->
+  <div *ngIf="requests.length === 0">
+    <p>Keine Anfragen vorhanden.</p>
+  </div>
+
+  <!-- Wenn Anfragen vorhanden sind -->
+  <div *ngFor="let request of requests">
+    <div class="request-card">
+      <p><strong>Listing ID:</strong> {{ request.listing_id }}</p>
+      <p><strong>Nachricht:</strong> {{ request.message }}</p>
+      <p><strong>Status:</strong> {{ request.status }}</p>
+      <button (click)="viewDetails(request)">Details anzeigen</button>
+    </div>
+  </div>
+</div>

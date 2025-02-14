@@ -29,7 +29,14 @@ export class AddRealEstateComponent {
     immediate_availability: true,
     status: 'Open',
     incoming_picture_urls: [],
-    type_attributes: {} // Wird dynamisch gesetzt basierend auf dem Typ
+    type_attributes: {
+      total_floor_area: 0,   // Hardcodiert
+      garden: false,         // Hardcodiert
+      floor_level: 0,        // Hardcodiert
+      balcony: false,        // Hardcodiert
+      roof_terrace: false,   // Hardcodiert
+      luxury: false          // Hardcodiert
+    }
   };
 
   categories = ['Houses', 'Rooms/Apartments'];  // Diese Listen könnten dynamisch vom Backend geladen werden
@@ -54,5 +61,26 @@ export class AddRealEstateComponent {
         // Hier kannst du eine Fehlerbehandlung einbauen
       }
     });
+  }
+
+  // Methode zum Ändern der Typ-spezifischen Attribute basierend auf dem gewählten Typ
+  onTypeChange() {
+    // Hardcoding der Typen-spezifischen Attribute
+    if (this.newRealEstate.type_name === 'Detached House') {
+      this.newRealEstate.type_attributes = { total_floor_area: 100, garden: true, floor_level: 1, balcony: false, roof_terrace: false, luxury: false };
+    } else if (this.newRealEstate.type_name === 'Apartment') {
+      this.newRealEstate.type_attributes = { total_floor_area: 60, garden: false, floor_level: 3, balcony: true, roof_terrace: false, luxury: false };
+    } else if (this.newRealEstate.type_name === 'Penthouse') {
+      this.newRealEstate.type_attributes = { total_floor_area: 120, garden: false, floor_level: 10, balcony: false, roof_terrace: true, luxury: true };
+    }
+  }
+
+  // Methode für den Dateiupload
+  onFileChange(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const files = Array.from(fileList);
+      this.newRealEstate.incoming_picture_urls = files.map(file => URL.createObjectURL(file));
+    }
   }
 }

@@ -1,19 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RealEstateService } from '../../../services/real-estate.service';
 
 @Component({
   selector: 'app-detailed-view',
   templateUrl: './detailed-view.component.html',
   styleUrls: ['./detailed-view.component.scss'],
-  standalone: true
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
-export class DetailedViewComponent {
-  propertyDetails = {
-    title: 'Schöne Wohnung',
-    description: 'Eine wunderbare Wohnung in guter Lage.',
-    price: 500
-  };
+export class DetailedViewComponent implements OnInit {
+  listing: any = null;
 
-  requestDetails() {
-    console.log('Requesting more details for:', this.propertyDetails.title);
+  constructor(
+    private route: ActivatedRoute,
+    private realEstateService: RealEstateService
+  ) {}
+
+  ngOnInit(): void {
+    // Hole die Listing-ID aus der URL (zum Beispiel über /tenant/details/:id)
+    const listingId = this.route.snapshot.paramMap.get('id');
+    if (listingId) {
+      this.realEstateService.getListingById(+listingId).subscribe({
+        next: (data) => {
+          this.listing = data;
+        },
+        error: (error) => {
+          console.error('Error fetching listing details:', error);
+        }
+      });
+    }
   }
 }

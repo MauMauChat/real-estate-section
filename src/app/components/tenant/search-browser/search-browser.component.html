@@ -1,5 +1,18 @@
 <div class="search-browser">
-  <h2>Suche nach Immobilien</h2>
-  <input [(ngModel)]="searchQuery" placeholder="Gib einen Suchbegriff ein..." />
-  <button (click)="performSearch()">Suchen</button>
+  <h2>Immobilien durchsuchen</h2>
+
+  <!-- Filter Button -->
+  <button (click)="goToFilter()">Filter anwenden</button>
+
+  <!-- Immobilienliste -->
+  <div *ngFor="let listing of listings">
+    <div class="listing">
+      <h3>{{ listing.property_name }}</h3>
+      <p>{{ listing.description }}</p>
+      <p><strong>Preis:</strong> €{{ listing.rental_price }}</p>
+      <p><strong>Status:</strong> {{ listing.status }}</p>
+      <p><strong>Typ:</strong> {{ listing.type_name }}</p>
+      <button (click)="viewDetails(listing.listing_id)">Details anzeigen</button>
+    </div>
+  </div>
 </div>

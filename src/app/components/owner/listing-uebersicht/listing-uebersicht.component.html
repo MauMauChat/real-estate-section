@@ -1,1 +1,21 @@
-<p>listing-uebersicht works!</p>
+<div class="listing-overview">
+  <h2>Meine Immobilien</h2>
+
+  <div *ngFor="let listing of listings">
+    <div class="listing-card">
+      <p>{{ listing.property_name }}</p>
+
+      <!-- Cross-checkbox für den Status -->
+      <label>
+        <input type="checkbox" [(ngModel)]="listing.status" [ngModelOptions]="{standalone: true}" (change)="updateStatus(listing)">
+        {{ listing.status === 'Open' ? 'Offen' : 'Vermietet' }}
+      </label>
+
+      <!-- Button zum Chat -->
+      <button (click)="goToChat(listing.listing_id)">Zum Chat</button>
+
+      <!-- Button zum Löschen -->
+      <button (click)="deleteListing(listing.listing_id)">Loeschen</button>
+    </div>
+  </div>
+</div>

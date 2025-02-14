@@ -9,7 +9,7 @@
 
   <!-- Typ Auswahl (Dropdown) -->
   <label for="type">Typ</label>
-  <select [(ngModel)]="newRealEstate.type_name" id="type" name="type">
+  <select [(ngModel)]="newRealEstate.type_name" id="type" name="type" (change)="onTypeChange()">
     <option *ngFor="let type of types" [value]="type">{{ type }}</option>
   </select>
 
@@ -69,7 +69,7 @@
 
   <!-- Typen-spezifische Attribute (abhängig vom Typ) -->
   <div *ngIf="newRealEstate.type_name">
-    <label for="typeAttributes">Typen-spezifische Attribute</label>
+    <label for="advancePayment">Typen-spezifische Attribute</label>
     <div *ngIf="newRealEstate.type_name === 'Detached House'">
       <label for="floorArea">Gesamtfläche (m²)</label>
       <input [(ngModel)]="newRealEstate.type_attributes.total_floor_area" id="floorArea" name="total_floor_area" type="number" placeholder="Gesamtfläche" />
@@ -77,7 +77,20 @@
       <label for="garden">Garten</label>
       <input [(ngModel)]="newRealEstate.type_attributes.garden" id="garden" name="garden" type="checkbox" />
     </div>
-    <!-- Weitere Typ-spezifische Eingaben könnten hier folgen -->
+    <div *ngIf="newRealEstate.type_name === 'Apartment'">
+      <label for="floorLevel">Stockwerk</label>
+      <input [(ngModel)]="newRealEstate.type_attributes.floor_level" id="floorLevel" name="floor_level" type="number" placeholder="Stockwerk" />
+
+      <label for="balcony">Balkon</label>
+      <input [(ngModel)]="newRealEstate.type_attributes.balcony" id="balcony" name="balcony" type="checkbox" />
+    </div>
+    <div *ngIf="newRealEstate.type_name === 'Penthouse'">
+      <label for="roofTerrace">Dachterrasse</label>
+      <input [(ngModel)]="newRealEstate.type_attributes.roof_terrace" id="roofTerrace" name="roof_terrace" type="checkbox" />
+
+      <label for="luxury">Luxusausstattung</label>
+      <input [(ngModel)]="newRealEstate.type_attributes.luxury" id="luxury" name="luxury" type="checkbox" />
+    </div>
   </div>
 
   <!-- Formular Absenden -->

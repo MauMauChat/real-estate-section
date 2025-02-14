@@ -1,11 +1,49 @@
 <div class="filter-browser">
-  <h2>Filter nach Kriterien</h2>
-  <label for="priceRange">Preisbereich:</label>
-  <input [(ngModel)]="filters.priceRange[0]" type="number" />
-  <input [(ngModel)]="filters.priceRange[1]" type="number" />
-  
-  <label for="category">Kategorie:</label>
-  <input [(ngModel)]="filters.category" type="text" placeholder="Kategorie" />
-  
-  <button (click)="applyFilter()">Filter anwenden</button>
+    <h2>Filter nach Kriterien</h2>
+
+    <!-- Preisbereich -->
+    <label for="category">Preisbereich:</label>
+    <input [(ngModel)]="filters.priceRange[0]" type="number" placeholder="Min Preis" />
+    <input [(ngModel)]="filters.priceRange[1]" type="number" placeholder="Max Preis" />
+
+    <!-- Kategorie Auswahl -->
+    <label for="category">Kategorie</label>
+    <select [(ngModel)]="filters.category" id="category" name="category">
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+
+    <!-- Typ Auswahl -->
+    <label for="type">Typ</label>
+    <select [(ngModel)]="filters.type" id="type" name="type">
+        <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+    </select>
+
+    <!-- Stadt Auswahl -->
+    <label for="city">Stadt</label>
+    <select [(ngModel)]="filters.city" id="city" name="city">
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+
+    <!-- Provinz Auswahl -->
+    <label for="province">Provinz</label>
+    <select [(ngModel)]="filters.province" id="province" name="province">
+        <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+    </select>
+
+    <!-- Verfügbarkeit Auswahl -->
+    <label for="availability">Verfügbarkeit</label>
+    <select [(ngModel)]="filters.availability" id="availability" name="availability">
+        <option value="true">Verfügbar</option>
+        <option value="false">Nicht verfügbar</option>
+    </select>
+
+    <!-- Status Auswahl -->
+    <label for="status">Status</label>
+    <select [(ngModel)]="filters.status" id="status" name="status">
+        <option value="Open">Open</option>
+        <option value="Rented">Rented</option>
+    </select>
+
+    <!-- Filter anwenden -->
+    <button (click)="applyFilter()">Filter anwenden</button>
 </div>

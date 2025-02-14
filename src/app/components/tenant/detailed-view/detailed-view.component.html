@@ -1,6 +1,52 @@
-<div class="detailed-view">
-  <h2>{{ propertyDetails.title }}</h2>
-  <p>{{ propertyDetails.description }}</p>
-  <p><strong>Preis:</strong> {{ propertyDetails.price }} EUR</p>
-  <button (click)="requestDetails()">Weitere Details anfordern</button>
+<div class="detailed-view" *ngIf="listing">
+  <!-- Titel und Beschreibung -->
+  <h2>{{ listing.property_name }}</h2>
+  <p>{{ listing.description }}</p>
+
+  <!-- Wichtige Attribute -->
+  <div class="attributes">
+    <p><strong>Kategorie:</strong> {{ listing.category_name }}</p>
+    <p><strong>Typ:</strong> {{ listing.type_name }}</p>
+    <p><strong>Adresse:</strong> {{ listing.property_address }}</p>
+    <p><strong>Stadt:</strong> {{ listing.city_name }}</p>
+    <p><strong>Provinz:</strong> {{ listing.province_name }}</p>
+    <p><strong>Mietpreis:</strong> {{ listing.rental_price }} EUR</p>
+    <p><strong>Mietdauer:</strong> {{ listing.rental_period }} Monate</p>
+    <p><strong>Vorauszahlung:</strong> {{ listing.advance_payment }} EUR</p>
+    <p>
+      <strong>Verfügbarkeit:</strong>
+      {{ listing.immediate_availability ? 'Verfügbar' : 'Nicht verfügbar' }}
+    </p>
+    <p><strong>Status:</strong> {{ listing.status }}</p>
+
+    <!-- Typenspezifische Attribute -->
+    <div *ngIf="listing.type_attributes">
+      <h3>Typenspezifische Attribute</h3>
+      <div *ngIf="listing.type_name === 'Detached House'">
+        <p><strong>Gesamtfläche:</strong> {{ listing.type_attributes.total_floor_area }} m²</p>
+        <p><strong>Garten:</strong> {{ listing.type_attributes.garden ? 'Ja' : 'Nein' }}</p>
+      </div>
+      <div *ngIf="listing.type_name === 'Apartment'">
+        <p><strong>Stockwerk:</strong> {{ listing.type_attributes.floor_level }}</p>
+        <p><strong>Balkon:</strong> {{ listing.type_attributes.balcony ? 'Ja' : 'Nein' }}</p>
+      </div>
+      <div *ngIf="listing.type_name === 'Penthouse'">
+        <p><strong>Dachterrasse:</strong> {{ listing.type_attributes.roof_terrace ? 'Ja' : 'Nein' }}</p>
+        <p><strong>Luxus:</strong> {{ listing.type_attributes.luxury ? 'Ja' : 'Nein' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bildergalerie -->
+  <div class="images" *ngIf="listing.incoming_picture_urls && listing.incoming_picture_urls.length">
+    <h3>Bilder</h3>
+    <div *ngFor="let imgUrl of listing.incoming_picture_urls">
+      <img [src]="imgUrl" alt="Immobilienbild" />
+    </div>
+  </div>
+</div>
+
+<!-- Ladeanzeige, falls keine Daten vorhanden sind -->
+<div *ngIf="!listing">
+  <p>Lade Immobilieninformationen...</p>
 </div>
