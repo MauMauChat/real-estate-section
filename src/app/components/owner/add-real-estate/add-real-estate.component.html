@@ -1,0 +1,85 @@
+<div class="add-real-estate">
+  <h2>Neue Immobilie hinzufügen</h2>
+
+  <!-- Kategorie Auswahl (Dropdown) -->
+  <label for="category">Kategorie</label>
+  <select [(ngModel)]="newRealEstate.category_name" id="category" name="category">
+    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+  </select>
+
+  <!-- Typ Auswahl (Dropdown) -->
+  <label for="type">Typ</label>
+  <select [(ngModel)]="newRealEstate.type_name" id="type" name="type">
+    <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+  </select>
+
+  <!-- Name der Immobilie (nur String) -->
+  <label for="propertyName">Name der Immobilie</label>
+  <input [(ngModel)]="newRealEstate.property_name" id="propertyName" name="property_name" type="text" placeholder="Name der Immobilie" required />
+
+  <!-- Beschreibung der Immobilie (nur String) -->
+  <label for="description">Beschreibung der Immobilie</label>
+  <textarea [(ngModel)]="newRealEstate.description" id="description" name="description" placeholder="Beschreibung der Immobilie" required></textarea>
+
+  <!-- Adresse der Immobilie -->
+  <label for="address">Adresse</label>
+  <input [(ngModel)]="newRealEstate.property_address" id="address" name="property_address" type="text" placeholder="Adresse der Immobilie" required />
+
+  <!-- Stadt (Dropdown) -->
+  <label for="city">Stadt</label>
+  <select [(ngModel)]="newRealEstate.city_name" id="city" name="city">
+    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+  </select>
+
+  <!-- Provinz (Dropdown) -->
+  <label for="province">Provinz</label>
+  <select [(ngModel)]="newRealEstate.province_name" id="province" name="province">
+    <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+  </select>
+
+  <!-- Mietpreis (nur Dezimalzahlen mit 2 Dezimalstellen) -->
+  <label for="rentalPrice">Mietpreis</label>
+  <input [(ngModel)]="newRealEstate.rental_price" id="rentalPrice" name="rental_price" type="number" step="0.01" min="0" placeholder="Mietpreis" required />
+
+  <!-- Mietdauer (nur positive ganze Zahlen) -->
+  <label for="rentalPeriod">Mietdauer (Monate)</label>
+  <input [(ngModel)]="newRealEstate.rental_period" id="rentalPeriod" name="rental_period" type="number" min="1" placeholder="Mietdauer" required />
+
+  <!-- Vorauszahlung (nur Dezimalzahlen mit 2 Dezimalstellen) -->
+  <label for="advancePayment">Vorauszahlung</label>
+  <input [(ngModel)]="newRealEstate.advance_payment" id="advancePayment" name="advance_payment" type="number" step="0.01" min="0" placeholder="Vorauszahlung" required />
+
+  <!-- Verfügbarkeit (Dropdown: Verfügbar oder Nicht verfügbar) -->
+  <label for="availability">Verfügbarkeit</label>
+  <select [(ngModel)]="newRealEstate.immediate_availability" id="availability" name="availability">
+    <option value="true">Verfügbar</option>
+    <option value="false">Nicht verfügbar</option>
+  </select>
+
+  <!-- Status der Immobilie (Dropdown: Open oder Rented) -->
+  <label for="status">Status</label>
+  <select [(ngModel)]="newRealEstate.status" id="status" name="status">
+    <option value="Open">Open</option>
+    <option value="Rented">Rented</option>
+  </select>
+
+  <!-- Bilder (Dateiupload) -->
+  <label for="images">Bilder</label>
+  <input [(ngModel)]="newRealEstate.incoming_picture_urls" id="images" name="images" type="file" accept="image/*" (change)="onFileChange($event)" multiple />
+
+  <!-- Typen-spezifische Attribute (abhängig vom Typ) -->
+  <div *ngIf="newRealEstate.type_name">
+    <label for="typeAttributes">Typen-spezifische Attribute</label>
+    <div *ngIf="newRealEstate.type_name === 'Detached House'">
+      <label for="floorArea">Gesamtfläche (m²)</label>
+      <input [(ngModel)]="newRealEstate.type_attributes.total_floor_area" id="floorArea" name="total_floor_area" type="number" placeholder="Gesamtfläche" />
+
+      <label for="garden">Garten</label>
+      <input [(ngModel)]="newRealEstate.type_attributes.garden" id="garden" name="garden" type="checkbox" />
+    </div>
+    <!-- Weitere Typ-spezifische Eingaben könnten hier folgen -->
+  </div>
+
+  <!-- Formular Absenden -->
+  <button (click)="addRealEstate()">Hinzufügen</button>
+</div>

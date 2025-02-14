@@ -1,0 +1,11 @@
+<div class="filter-browser">
+  <h2>Filter nach Kriterien</h2>
+  <label for="priceRange">Preisbereich:</label>
+  <input [(ngModel)]="filters.priceRange[0]" type="number" />
+  <input [(ngModel)]="filters.priceRange[1]" type="number" />
+  
+  <label for="category">Kategorie:</label>
+  <input [(ngModel)]="filters.category" type="text" placeholder="Kategorie" />
+  
+  <button (click)="applyFilter()">Filter anwenden</button>
+</div>
