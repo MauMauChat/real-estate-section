@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { RealEstateService } from '../../../services/real-estate.service'; // Importiere den Service
+import { RealEstateService } from '../../../services/real-estate.service';
+import {CommonModule} from '@angular/common';
+import {RealEstate} from '../../../models/real-estate.model'; // Importiere den Service
+import { categories, types, cities, provinces } from '../../../data/data';  // Importiere die Daten
 
 @Component({
   selector: 'app-add-real-estate',
@@ -9,13 +11,15 @@ import { RealEstateService } from '../../../services/real-estate.service'; // Im
   styleUrls: ['./add-real-estate.component.scss'],
   imports: [
     FormsModule,
-    RouterModule,
+    CommonModule,
   ],
   standalone: true
 })
 export class AddRealEstateComponent {
   // Initialisierung des Objekts mit allen Feldern
-  newRealEstate = {
+  newRealEstate: RealEstate = {
+    real_estate_id: 0,
+    user_id: 0,
     category_name: '',
     type_name: '',
     property_name: '',
@@ -39,10 +43,11 @@ export class AddRealEstateComponent {
     }
   };
 
-  categories = ['Houses', 'Rooms/Apartments'];  // Diese Listen könnten dynamisch vom Backend geladen werden
-  types = ['Detached House', 'Apartment', 'Penthouse'];
-  cities = ['Graz', 'Vienna', 'Innsbruck'];
-  provinces = ['Steiermark', 'Tirol', 'Kärnten'];
+
+  categories = categories;
+  types = types;
+  cities = cities;
+  provinces = provinces;
 
   constructor(private realEstateService: RealEstateService) {}
 
@@ -63,17 +68,7 @@ export class AddRealEstateComponent {
     });
   }
 
-  // Methode zum Ändern der Typ-spezifischen Attribute basierend auf dem gewählten Typ
-  onTypeChange() {
-    // Hardcoding der Typen-spezifischen Attribute
-    if (this.newRealEstate.type_name === 'Detached House') {
-      this.newRealEstate.type_attributes = { total_floor_area: 100, garden: true, floor_level: 1, balcony: false, roof_terrace: false, luxury: false };
-    } else if (this.newRealEstate.type_name === 'Apartment') {
-      this.newRealEstate.type_attributes = { total_floor_area: 60, garden: false, floor_level: 3, balcony: true, roof_terrace: false, luxury: false };
-    } else if (this.newRealEstate.type_name === 'Penthouse') {
-      this.newRealEstate.type_attributes = { total_floor_area: 120, garden: false, floor_level: 10, balcony: false, roof_terrace: true, luxury: true };
-    }
-  }
+
 
   // Methode für den Dateiupload
   onFileChange(event: any) {

@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RealEstateService } from '../../../services/real-estate.service'; // Importiere den Service
 import { Router } from '@angular/router';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-search-browser',
   templateUrl: './search-browser.component.html',
   styleUrls: ['./search-browser.component.scss'],
+  imports: [
+    NgForOf
+  ],
   standalone: true
 })
 export class SearchBrowserComponent implements OnInit {

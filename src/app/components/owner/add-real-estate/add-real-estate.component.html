@@ -9,7 +9,7 @@
 
   <!-- Typ Auswahl (Dropdown) -->
   <label for="type">Typ</label>
-  <select [(ngModel)]="newRealEstate.type_name" id="type" name="type" (change)="onTypeChange()">
+  <select [(ngModel)]="newRealEstate.type_name" id="type" name="type" >
     <option *ngFor="let type of types" [value]="type">{{ type }}</option>
   </select>
 
@@ -69,7 +69,7 @@
 
   <!-- Typen-spezifische Attribute (abhängig vom Typ) -->
   <div *ngIf="newRealEstate.type_name">
-    <label for="advancePayment">Typen-spezifische Attribute</label>
+    <label for="">Typen-spezifische Attribute</label>
     <div *ngIf="newRealEstate.type_name === 'Detached House'">
       <label for="floorArea">Gesamtfläche (m²)</label>
       <input [(ngModel)]="newRealEstate.type_attributes.total_floor_area" id="floorArea" name="total_floor_area" type="number" placeholder="Gesamtfläche" />

@@ -9,7 +9,7 @@ export interface RealEstate {
   city_name: string;
   province_name: string;
   rental_price: number;
-  rental_period: string;
+  rental_period: number;
   advance_payment: number;
   immediate_availability: boolean;
   status: string;

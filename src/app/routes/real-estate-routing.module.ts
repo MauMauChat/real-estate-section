@@ -20,5 +20,5 @@ export const routes: Routes = [
   { path: '', redirectTo: '/tenant/search', pathMatch: 'full' }
 ];
 
-export const routing = RouterModule.forRoot(routes);
+RouterModule.forRoot(routes);
 export class RealEstateRoutingModule { }
