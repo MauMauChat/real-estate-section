@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RealEstateService {
-  private apiUrl = 'https://api.example.com/real-estate';
-  private requestApiUrl = 'https://api.example.com/requests';  // URL für die Requests
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
@@ -32,6 +31,6 @@ export class RealEstateService {
 
   // Neue Methode zum Abrufen der Anfragen (Requests)
   getAllRequests(): Observable<any> {
-    return this.http.get<any>(this.requestApiUrl);  // Angenommene API-URL für Requests
+    return this.http.get<any>(this.apiUrl);  // Angenommene API-URL für Requests
   }
 }

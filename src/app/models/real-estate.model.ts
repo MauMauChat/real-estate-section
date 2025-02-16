@@ -13,6 +13,6 @@ export interface RealEstate {
   advance_payment: number;
   immediate_availability: boolean;
   status: string;
-  incoming_picture_urls: string[];
+  pictures: File[];
   type_attributes: any;
 }

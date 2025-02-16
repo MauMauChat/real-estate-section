@@ -1,98 +1,148 @@
-<div class="add-real-estate">
-  <h2>Neue Immobilie hinzufügen</h2>
+<div class="add-real-estate-container">
+  <div class="card">
+    <h2>Neue Immobilie hinzufügen</h2>
+    <form>
+      <!-- Kategorie Auswahl -->
+      <div class="form-group">
+        <label for="category">Kategorie</label>
+        <select id="category" name="category" [(ngModel)]="newRealEstate.category_name">
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
 
-  <!-- Kategorie Auswahl (Dropdown) -->
-  <label for="category">Kategorie</label>
-  <select [(ngModel)]="newRealEstate.category_name" id="category" name="category">
-    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-  </select>
+      <!-- Typ Auswahl -->
+      <div class="form-group">
+        <label for="type">Typ</label>
+        <select id="type" name="type" [(ngModel)]="newRealEstate.type_name">
+          <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+        </select>
+      </div>
 
-  <!-- Typ Auswahl (Dropdown) -->
-  <label for="type">Typ</label>
-  <select [(ngModel)]="newRealEstate.type_name" id="type" name="type" >
-    <option *ngFor="let type of types" [value]="type">{{ type }}</option>
-  </select>
+      <!-- Name der Immobilie -->
+      <div class="form-group">
+        <label for="propertyName">Name der Immobilie</label>
+        <input type="text" id="propertyName" name="property_name" [(ngModel)]="newRealEstate.property_name" placeholder="Name der Immobilie" required />
+      </div>
 
-  <!-- Name der Immobilie (nur String) -->
-  <label for="propertyName">Name der Immobilie</label>
-  <input [(ngModel)]="newRealEstate.property_name" id="propertyName" name="property_name" type="text" placeholder="Name der Immobilie" required />
+      <!-- Beschreibung -->
+      <div class="form-group">
+        <label for="description">Beschreibung der Immobilie</label>
+        <textarea id="description" name="description" [(ngModel)]="newRealEstate.description" placeholder="Beschreibung der Immobilie" required></textarea>
+      </div>
 
-  <!-- Beschreibung der Immobilie (nur String) -->
-  <label for="description">Beschreibung der Immobilie</label>
-  <textarea [(ngModel)]="newRealEstate.description" id="description" name="description" placeholder="Beschreibung der Immobilie" required></textarea>
+      <!-- Adresse -->
+      <div class="form-group">
+        <label for="address">Adresse</label>
+        <input type="text" id="address" name="property_address" [(ngModel)]="newRealEstate.property_address" placeholder="Adresse der Immobilie" required />
+      </div>
 
-  <!-- Adresse der Immobilie -->
-  <label for="address">Adresse</label>
-  <input [(ngModel)]="newRealEstate.property_address" id="address" name="property_address" type="text" placeholder="Adresse der Immobilie" required />
+      <!-- Stadt -->
+      <div class="form-group">
+        <label for="city">Stadt</label>
+        <select id="city" name="city" [(ngModel)]="newRealEstate.city_name">
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+        </select>
+      </div>
 
-  <!-- Stadt (Dropdown) -->
-  <label for="city">Stadt</label>
-  <select [(ngModel)]="newRealEstate.city_name" id="city" name="city">
-    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-  </select>
+      <!-- Provinz -->
+      <div class="form-group">
+        <label for="province">Provinz</label>
+        <select id="province" name="province" [(ngModel)]="newRealEstate.province_name">
+          <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+        </select>
+      </div>
 
-  <!-- Provinz (Dropdown) -->
-  <label for="province">Provinz</label>
-  <select [(ngModel)]="newRealEstate.province_name" id="province" name="province">
-    <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
-  </select>
+      <!-- Mietpreis -->
+      <div class="form-group">
+        <label for="rentalPrice">Mietpreis</label>
+        <input type="number" id="rentalPrice" name="rental_price" [(ngModel)]="newRealEstate.rental_price" step="0.01" min="0" placeholder="Mietpreis" required />
+      </div>
 
-  <!-- Mietpreis (nur Dezimalzahlen mit 2 Dezimalstellen) -->
-  <label for="rentalPrice">Mietpreis</label>
-  <input [(ngModel)]="newRealEstate.rental_price" id="rentalPrice" name="rental_price" type="number" step="0.01" min="0" placeholder="Mietpreis" required />
+      <!-- Mietdauer -->
+      <div class="form-group">
+        <label for="rentalPeriod">Mietdauer (Monate)</label>
+        <input type="number" id="rentalPeriod" name="rental_period" [(ngModel)]="newRealEstate.rental_period" min="1" placeholder="Mietdauer" required />
+      </div>
 
-  <!-- Mietdauer (nur positive ganze Zahlen) -->
-  <label for="rentalPeriod">Mietdauer (Monate)</label>
-  <input [(ngModel)]="newRealEstate.rental_period" id="rentalPeriod" name="rental_period" type="number" min="1" placeholder="Mietdauer" required />
+      <!-- Vorauszahlung -->
+      <div class="form-group">
+        <label for="advancePayment">Vorauszahlung</label>
+        <input type="number" id="advancePayment" name="advance_payment" [(ngModel)]="newRealEstate.advance_payment" step="0.01" min="0" placeholder="Vorauszahlung" required />
+      </div>
 
-  <!-- Vorauszahlung (nur Dezimalzahlen mit 2 Dezimalstellen) -->
-  <label for="advancePayment">Vorauszahlung</label>
-  <input [(ngModel)]="newRealEstate.advance_payment" id="advancePayment" name="advance_payment" type="number" step="0.01" min="0" placeholder="Vorauszahlung" required />
+      <!-- Verfügbarkeit -->
+      <div class="form-group">
+        <label for="availability">Verfügbarkeit</label>
+        <select id="availability" name="availability" [(ngModel)]="newRealEstate.immediate_availability">
+          <option value="true">Verfügbar</option>
+          <option value="false">Nicht verfügbar</option>
+        </select>
+      </div>
 
-  <!-- Verfügbarkeit (Dropdown: Verfügbar oder Nicht verfügbar) -->
-  <label for="availability">Verfügbarkeit</label>
-  <select [(ngModel)]="newRealEstate.immediate_availability" id="availability" name="availability">
-    <option value="true">Verfügbar</option>
-    <option value="false">Nicht verfügbar</option>
-  </select>
+      <!-- Status -->
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status" [(ngModel)]="newRealEstate.status">
+          <option value="Open">Open</option>
+          <option value="Rented">Rented</option>
+        </select>
+      </div>
 
-  <!-- Status der Immobilie (Dropdown: Open oder Rented) -->
-  <label for="status">Status</label>
-  <select [(ngModel)]="newRealEstate.status" id="status" name="status">
-    <option value="Open">Open</option>
-    <option value="Rented">Rented</option>
-  </select>
+      <!-- Bilder Upload -->
+      <div class="form-group">
+        <label for="images">Bilder</label>
+        <input type="file" id="images" name="images" accept="image/*" (change)="createPictureArray($event)" multiple />
+      </div>
 
-  <!-- Bilder (Dateiupload) -->
-  <label for="images">Bilder</label>
-  <input [(ngModel)]="newRealEstate.incoming_picture_urls" id="images" name="images" type="file" accept="image/*" (change)="onFileChange($event)" multiple />
+      <!-- Bildvorschau -->
+      <div class="image-preview" *ngIf="newRealEstate.pictures && newRealEstate.pictures.length">
+        <h3>Bildvorschau</h3>
+        <div class="preview-list">
+          <div class="preview-item" *ngFor="let pic of newRealEstate.pictures; let i = index">
+            <img [src]="pic" alt="Bild {{i + 1}}" />
+          </div>
+        </div>
+      </div>
 
-  <!-- Typen-spezifische Attribute (abhängig vom Typ) -->
-  <div *ngIf="newRealEstate.type_name">
-    <label for="">Typen-spezifische Attribute</label>
-    <div *ngIf="newRealEstate.type_name === 'Detached House'">
-      <label for="floorArea">Gesamtfläche (m²)</label>
-      <input [(ngModel)]="newRealEstate.type_attributes.total_floor_area" id="floorArea" name="total_floor_area" type="number" placeholder="Gesamtfläche" />
+      <!-- Typen-spezifische Attribute -->
+      <div class="form-group" *ngIf="newRealEstate.type_name">
+        <label>Typen-spezifische Attribute</label>
+        <div *ngIf="newRealEstate.type_name === 'Detached House'" class="specific-attributes">
+          <div class="form-group">
+            <label for="floorArea">Gesamtfläche (m²)</label>
+            <input type="number" id="floorArea" name="total_floor_area" [(ngModel)]="newRealEstate.type_attributes.total_floor_area" placeholder="Gesamtfläche" />
+          </div>
+          <div class="form-group">
+            <label for="garden">Garten</label>
+            <input type="checkbox" id="garden" name="garden" [(ngModel)]="newRealEstate.type_attributes.garden" />
+          </div>
+        </div>
+        <div *ngIf="newRealEstate.type_name === 'Apartment'" class="specific-attributes">
+          <div class="form-group">
+            <label for="floorLevel">Stockwerk</label>
+            <input type="number" id="floorLevel" name="floor_level" [(ngModel)]="newRealEstate.type_attributes.floor_level" placeholder="Stockwerk" />
+          </div>
+          <div class="form-group">
+            <label for="balcony">Balkon</label>
+            <input type="checkbox" id="balcony" name="balcony" [(ngModel)]="newRealEstate.type_attributes.balcony" />
+          </div>
+        </div>
+        <div *ngIf="newRealEstate.type_name === 'Penthouse'" class="specific-attributes">
+          <div class="form-group">
+            <label for="roofTerrace">Dachterrasse</label>
+            <input type="checkbox" id="roofTerrace" name="roof_terrace" [(ngModel)]="newRealEstate.type_attributes.roof_terrace" />
+          </div>
+          <div class="form-group">
+            <label for="luxury">Luxusausstattung</label>
+            <input type="checkbox" id="luxury" name="luxury" [(ngModel)]="newRealEstate.type_attributes.luxury" />
+          </div>
+        </div>
+      </div>
 
-      <label for="garden">Garten</label>
-      <input [(ngModel)]="newRealEstate.type_attributes.garden" id="garden" name="garden" type="checkbox" />
-    </div>
-    <div *ngIf="newRealEstate.type_name === 'Apartment'">
-      <label for="floorLevel">Stockwerk</label>
-      <input [(ngModel)]="newRealEstate.type_attributes.floor_level" id="floorLevel" name="floor_level" type="number" placeholder="Stockwerk" />
-
-      <label for="balcony">Balkon</label>
-      <input [(ngModel)]="newRealEstate.type_attributes.balcony" id="balcony" name="balcony" type="checkbox" />
-    </div>
-    <div *ngIf="newRealEstate.type_name === 'Penthouse'">
-      <label for="roofTerrace">Dachterrasse</label>
-      <input [(ngModel)]="newRealEstate.type_attributes.roof_terrace" id="roofTerrace" name="roof_terrace" type="checkbox" />
-
-      <label for="luxury">Luxusausstattung</label>
-      <input [(ngModel)]="newRealEstate.type_attributes.luxury" id="luxury" name="luxury" type="checkbox" />
-    </div>
+      <!-- Absenden -->
+      <div class="form-group submit-group">
+        <button type="button" (click)="addRealEstate()">Hinzufügen</button>
+      </div>
+    </form>
   </div>
-
-  <!-- Formular Absenden -->
-  <button (click)="addRealEstate()">Hinzufügen</button>
 </div>
