@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+/* CSS Reset und Basis-Stile */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* Mobile-first Ansatz: Basis-Schriftgröße für mobile Geräte */
+  font-size: 100%; /* entspricht ca. 16px */
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 1rem;
+}
+
+/* Responsive Bilder */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Zentrale Container-Klasse */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Typographie für Überschriften */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Standard Absatz-Stile */
+p {
+  margin-bottom: 1rem;
+}
+
+/* Utility-Klassen */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+/* Media Queries zur Anpassung der Schriftgröße auf kleineren Bildschirmen */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) {
+  body {
+    font-size: 16px;
+  }
+}
