@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RealEstateService } from '../../../services/real-estate.service';
-import {CommonModule} from '@angular/common';
-import {RealEstate} from '../../../models/real-estate.model'; // Importiere den Service
+import { CommonModule } from '@angular/common';
+import { RealEstate } from '../../../models/real-estate.model';
 import { categories, types, cities, provinces } from '../../../data/data';
 
 @Component({
@@ -16,43 +16,37 @@ import { categories, types, cities, provinces } from '../../../data/data';
   standalone: true
 })
 export class AddRealEstateComponent {
-  // Initialisierung des Objekts mit allen Feldern
-  newRealEstate: RealEstate = {} as RealEstate ;
+  // Dieses Objekt wird für die File-Uploads (über createPictureArray) genutzt
+  newRealEstate: RealEstate = {} as RealEstate;
+
+
 
   categories = categories;
   types = types;
   cities = cities;
   provinces = provinces;
-    defaultRealEstate: RealEstate = {
-    real_estate_id: 1,
-    user_id: 1001,
-    category_name: "Wohnung",
-    type_name: "Penthouse",
-    property_name: "Luxus-Penthouse mit Skyline-Blick",
-    description: "Exklusive 4-Zimmer-Wohnung mit modernster Ausstattung und Dachterrasse.",
-    property_address: "Musterstraße 12, 10115 Berlin",
-    city_name: "Berlin",
-    province_name: "Berlin",
-    rental_price: 3500,
-    rental_period: 12, // Monate
-    advance_payment: 3, // Kaution in Monatsmieten
-    immediate_availability: true,
-    status: "verfügbar",
-    pictures: [], // Bilder bleiben uninitialisiert
-    type_attributes: {
-      wohnflaeche: "180m²",
-      zimmer: 4,
-      baujahr: 2020,
-      heizung: "Fußbodenheizung",
-      energieeffizienzklasse: "A+"
-    }
-  };
 
   constructor(private realEstateService: RealEstateService) {}
 
-  // Methode zum Absenden der Immobilie
+  // Diese Methode erstellt ein FormData-Objekt, in dem das Immobilienobjekt (als JSON)
+  // und die Bilder (als File-Objekte) enthalten sind.
   addRealEstate() {
-    this.realEstateService.createListing(this.defaultRealEstate).subscribe({
+    const formData = new FormData();
+
+    // Hier kannst du entweder defaultRealEstate oder ein zusammengeführtes Objekt verwenden.
+    // In diesem Beispiel senden wir defaultRealEstate, da es alle nötigen Felder enthält.
+    formData.append('real_estate', JSON.stringify(this.newRealEstate));
+
+    // Falls über die Bild-Auswahl (createPictureArray) Dateien ausgewählt wurden,
+    // hänge sie an das FormData an.
+    if (this.newRealEstate.pictures && this.newRealEstate.pictures.length > 0) {
+      this.newRealEstate.pictures.forEach((file: File) => {
+        formData.append('pictures', file, file.name);
+      });
+    }
+
+    // Sende das FormData an den Service
+    this.realEstateService.createListing(formData).subscribe({
       next: (response) => {
         console.log('Listing successfully created:', response);
         // Hier kannst du den Nutzer benachrichtigen oder die Seite weiterleiten
@@ -64,11 +58,11 @@ export class AddRealEstateComponent {
     });
   }
 
+  // Diese Methode wandelt die ausgewählten Dateien in ein Array um, das dann in newRealEstate gespeichert wird.
   createPictureArray(event: any) {
-    const fileList: FileList = event.target.files; // Holt die ausgewählten Dateien
+    const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      this.newRealEstate.pictures = Array.from(fileList); // Speichert die Dateien in einem Array
+      this.newRealEstate.pictures = Array.from(fileList);
     }
   }
-
 }
