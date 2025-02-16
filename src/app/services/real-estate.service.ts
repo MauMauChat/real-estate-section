@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RealEstateService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:300';
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class RealEstateService {
   }
 
   createListing(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, data);
+    return this.http.post<any>("http://localhost:3000/api/immobilien", data);
   }
   updateListing(data: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${data.listing_id}`, data);

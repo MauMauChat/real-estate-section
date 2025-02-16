@@ -31,6 +31,10 @@ export class AddRealEstateComponent {
   // Diese Methode erstellt ein FormData-Objekt, in dem das Immobilienobjekt (als JSON)
   // und die Bilder (als File-Objekte) enthalten sind.
   addRealEstate() {
+    if (!this.newRealEstate.type_attributes) {
+      this.newRealEstate.type_attributes = {};
+    }
+
     const formData = new FormData();
 
     // Hier kannst du entweder defaultRealEstate oder ein zusammengeführtes Objekt verwenden.
@@ -52,7 +56,7 @@ export class AddRealEstateComponent {
         // Hier kannst du den Nutzer benachrichtigen oder die Seite weiterleiten
       },
       error: (err) => {
-        console.error('Error creating listing:', err);
+        console.error('Error creating listing*(troubel):', err);
         // Hier kannst du eine Fehlerbehandlung einbauen
       }
     });
