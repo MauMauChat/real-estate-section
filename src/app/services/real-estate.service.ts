@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,9 +14,15 @@ export class RealEstateService {
 
   constructor(private http: HttpClient) {}
 
-  // Beispiel: Alle Listings abrufen
-  getAllListingsBasedOnCriteria(): Observable<any> {
-    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`);
+  // Neue Methode: Alle Listings anhand optionaler Filterkriterien abrufen.
+  getAllListingsByCriteria(criteria: any = {}): Observable<any> {
+    let params = new HttpParams();
+    Object.keys(criteria).forEach(key => {
+      if (criteria[key] !== null && criteria[key] !== '' && criteria[key] !== undefined) {
+        params = params.set(key, criteria[key]);
+      }
+    });
+    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`, { params });
   }
   getAllListings(): Observable<any> {
     return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`);

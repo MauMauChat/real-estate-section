@@ -55,12 +55,12 @@ export class SearchBrowserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAllListings();
+    this.getAllListingsForSearchBrowser();
   }
 
-  // Ruft alle Immobilien ab und initialisiert filteredListings
-  getAllListings() {
-    this.realEstateService.getAllListings().subscribe({
+  getAllListingsForSearchBrowser() {
+    // Übergibt das filter-Objekt als Query-Parameter an den Service
+    this.realEstateService.getAllListingsByCriteria(this.filter).subscribe({
       next: (response) => {
         this.listings = response;
         this.filteredListings = response;
