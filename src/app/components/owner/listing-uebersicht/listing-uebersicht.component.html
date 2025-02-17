@@ -1,9 +1,9 @@
 <div class="listing-overview">
   <h2>Meine Immobilien</h2>
   <div *ngFor="let listing of listings" class="listing-card">
-    <!-- Anzeige des Namens und eines Bildes (anpassen, falls das Bild anders bereitgestellt wird) -->
+    <!-- Anzeige des Namens und eines Bildes (hier wird das erste Bild aus incoming_picture_urls verwendet) -->
     <h3>{{ listing.property_name }}</h3>
-    <img [src]="listing.imageUrl" alt="Bild der Immobilie" />
+    <img [src]="getPictureUrl(listing)" alt="Bild der Immobilie" />
 
     <!-- Buttons und Checkbox -->
     <div class="button-group">
@@ -22,7 +22,7 @@
           type="checkbox"
           [checked]="listing.status === 'Rented'"
           (change)="toggleStatus(listing)"
-          [ngModelOptions]="{standalone: true}"
+          [ngModelOptions]="{ standalone: true }"
         />
         {{ listing.status === 'Open' ? 'Offen' : 'Vermietet' }}
       </label>

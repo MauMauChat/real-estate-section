@@ -18,6 +18,9 @@ export class RealEstateService {
   getAllListingsBasedOnCriteria(): Observable<any> {
     return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`);
   }
+  getAllListings(): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`);
+  }
 
   // Anfragen (Requests) abrufen
   getAllRequestsByRequester(requester_id: number = 1): Observable<any> {
