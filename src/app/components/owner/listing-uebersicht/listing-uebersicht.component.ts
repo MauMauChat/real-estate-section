@@ -1,64 +1,68 @@
 import { Component, OnInit } from '@angular/core';
-import {RealEstateService} from '../../../services/real-estate.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RealEstateService } from '../../../services/real-estate.service';
 
 @Component({
   selector: 'app-listing-overview',
-  templateUrl: './listing-overview.component.html',
+  templateUrl: 'listing-uebersicht.component.html',
   styleUrls: ['./listing-overview.component.scss'],
-  standalone: true
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
-export class ListingUebersichtComponent implements OnInit {
-  listings: any[] = []; // Array für die Immobilien des Eigentümers
+export class ListingOverviewComponent implements OnInit {
+  listings: any[] = [];
 
-  constructor(private realEstateService: RealEstateService) {}
+  constructor(
+    private realEstateService: RealEstateService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
-    this.loadOwnerListings(); // Lädt die Immobilien des Eigentümers
+  ngOnInit(): void {
+    this.loadListings();
   }
 
-  // Lädt alle Listings des Eigentümers
-  loadOwnerListings() {
-    const ownerId = 1; // Beispiel für die ID des Eigentümers
-    this.realEstateService.getAllListings().subscribe(
-      (data) => {
-        this.listings = data.filter(listing => listing.user_id === ownerId); // Filtert nur die Listings des Eigentümers
+  // Lädt alle Listings aus dem Backend
+  loadListings(): void {
+    // TODO: Implemented taking the owner_id(user_id) from the JWT
+    const owner_id: number = 1;
+    this.realEstateService.getAllListingsByOwner(owner_id).subscribe({
+      next: (data) => {
+        this.listings = data;
       },
-      (error) => {
-        console.error('Error loading listings:', error);
-      }
-    );
+      error: (err) => console.error('Fehler beim Laden der Listings:', err)
+    });
   }
 
-  // Funktion zum Aktualisieren des Status (Open/Rented)
-  updateStatus(listing: any) {
-    this.realEstateService.updateListing(listing).subscribe(
-      (response) => {
-        console.log('Listing status updated:', response);
+  // Löscht ein Listing und lädt die Übersicht neu
+  deleteListing(listingId: number): void {
+    this.realEstateService.deleteListing(listingId).subscribe({
+      next: () => {
+        console.log('Listing gelöscht:', listingId);
+        this.loadListings();
       },
-      (error) => {
-        console.error('Error updating listing status:', error);
-      }
-    );
+      error: (err) => console.error('Fehler beim Löschen des Listings:', err)
+    });
   }
 
-  // Funktion zum Weiterleiten zur Chat-Seite
-  goToChat(listingId: number) {
-    // Hier wird die Chat-Seite aufgerufen, z.B. durch Router Navigation (kann durch URL oder Parameter geschehen)
-    console.log('Navigating to chat for listing ID:', listingId);
+  // Platzhalter: Leitet zur Chat-Komponente weiter (noch zu implementieren)
+  goToChat(listingId: number): void {
+    console.log('Chat für Listing', listingId);
     // Beispiel: this.router.navigate(['/chat', listingId]);
   }
 
-// Funktion zum Löschen eines Listings
-  deleteListing(listingId: number) {
-    this.realEstateService.deleteListing(listingId).subscribe(
-      () => {
-        // Entferne das gelöschte Listing aus der Liste
-        this.listings = this.listings.filter(listing => listing.listing_id !== listingId);
-        console.log('Listing deleted:', listingId);
-      },
-      (error) => {
-        console.error('Error deleting listing:', error);
-      }
-    );
+  // Leitet zur Edit-Komponente weiter und lädt die Detailwerte des Listings
+  editListing(listingId: number): void {
+    this.router.navigate(['/owner/edit', listingId]);
+  }
+
+  // Wechselt den Status des Listings und schickt die Änderung an den Service
+  toggleStatus(listing: any): void {
+    listing.status = listing.status === 'Open' ? 'Rented' : 'Open';
+    this.realEstateService.updateListing(listing).subscribe({
+      next: () => console.log('Status aktualisiert für Listing:', listing.listing_id),
+      error: (err) => console.error('Fehler beim Aktualisieren des Status:', err)
+    });
   }
 }

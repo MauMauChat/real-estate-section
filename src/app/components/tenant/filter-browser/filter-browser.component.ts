@@ -38,7 +38,7 @@ export class FilterBrowserComponent {
     console.log('Filters applied:', this.filters);
 
     // Filterdaten an den RealEstateService senden, um gefilterte Ergebnisse zu erhalten
-    this.realEstateService.getAllListings().subscribe({
+    this.realEstateService.getAllListingsByOwner().subscribe({
       next: (response) => {
         console.log('Filtered listings:', response);
         // Hier kannst du die Ergebnisse anzeigen oder verarbeiten

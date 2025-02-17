@@ -52,8 +52,8 @@
   <!-- Verfügbarkeit -->
   <label for="availability">Verfügbarkeit</label>
   <select [(ngModel)]="realEstateToEdit.immediate_availability" id="availability" name="availability">
-    <option value="true">Verfügbar</option>
-    <option value="false">Nicht verfügbar</option>
+    <option [value]="true">Verfügbar</option>
+    <option [value]="false">Nicht verfügbar</option>
   </select>
 
   <!-- Status -->
@@ -62,6 +62,30 @@
     <option value="Open">Offen</option>
     <option value="Rented">Vermietet</option>
   </select>
+
+  <!-- Bilder Upload -->
+  <div class="form-group">
+    <label for="images">Bilder hinzufügen</label>
+    <input
+      type="file"
+      id="images"
+      name="images"
+      accept="image/*"
+      (change)="createPictureArray($event)"
+      multiple
+    />
+  </div>
+
+  <!-- Bildvorschau -->
+  <div class="image-preview" *ngIf="realEstateToEdit.pictures && realEstateToEdit.pictures.length">
+    <h3>Bildvorschau</h3>
+    <div class="preview-list">
+      <div class="preview-item" *ngFor="let pic of realEstateToEdit.pictures; let i = index">
+        <!-- Für neu ausgewählte Dateien kannst du URL.createObjectURL verwenden -->
+        <img [src]="getPictureUrl(pic)" alt="Bild {{ i + 1 }}" />
+      </div>
+    </div>
+  </div>
 
   <button (click)="editRealEstate()">Bearbeiten</button>
 </div>

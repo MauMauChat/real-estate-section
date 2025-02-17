@@ -1,21 +1,31 @@
 <div class="listing-overview">
   <h2>Meine Immobilien</h2>
+  <div *ngFor="let listing of listings" class="listing-card">
+    <!-- Anzeige des Namens und eines Bildes (anpassen, falls das Bild anders bereitgestellt wird) -->
+    <h3>{{ listing.property_name }}</h3>
+    <img [src]="listing.imageUrl" alt="Bild der Immobilie" />
 
-  <div *ngFor="let listing of listings">
-    <div class="listing-card">
-      <p>{{ listing.property_name }}</p>
+    <!-- Buttons und Checkbox -->
+    <div class="button-group">
+      <!-- Löschen-Button: ruft deleteListing auf und lädt anschließend die Liste neu -->
+      <button (click)="deleteListing(listing.real_estate_id)">Löschen</button>
 
-      <!-- Cross-checkbox für den Status -->
+      <!-- Chat-Button: Platzhalter für Chat-Funktionalität -->
+      <button (click)="goToChat(listing.real_estate_id)">Chat</button>
+
+      <!-- Edit-Button: Navigiert zur Edit-Komponente, wo die Daten geladen werden -->
+      <button (click)="editListing(listing.real_estate_id)">Edit</button>
+
+      <!-- Checkbox: Wechselt zwischen 'Open' und 'Rented' und sendet die Änderung -->
       <label>
-        <input type="checkbox" [(ngModel)]="listing.status" [ngModelOptions]="{standalone: true}" (change)="updateStatus(listing)">
+        <input
+          type="checkbox"
+          [checked]="listing.status === 'Rented'"
+          (change)="toggleStatus(listing)"
+          [ngModelOptions]="{standalone: true}"
+        />
         {{ listing.status === 'Open' ? 'Offen' : 'Vermietet' }}
       </label>
-
-      <!-- Button zum Chat -->
-      <button (click)="goToChat(listing.listing_id)">Zum Chat</button>
-
-      <!-- Button zum Löschen -->
-      <button (click)="deleteListing(listing.listing_id)">Loeschen</button>
     </div>
   </div>
 </div>

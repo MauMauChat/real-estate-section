@@ -19,13 +19,13 @@ export class RequestUebersichtComponent implements OnInit {
   // Lädt alle Requests basierend auf der Listing ID
   loadRequests() {
     const ownerId = 1;  // Beispiel für die Owner ID (kann dynamisch festgelegt werden)
-    this.realEstateService.getAllListings().subscribe(
+    this.realEstateService.getAllListingsByOwner().subscribe(
       (listings) => {
         // Hole alle Listings des Owners
         const ownerListings = listings.filter(listing => listing.user_id === ownerId);
 
         // Lade alle Requests für die Listings des Owners
-        this.realEstateService.getAllRequests().subscribe(
+        this.realEstateService.getAllRequestsByRequester().subscribe(
           (requests) => {
             // Filtern von Requests, die zu den Listings des Owners gehören
             this.requests = requests.filter(request =>

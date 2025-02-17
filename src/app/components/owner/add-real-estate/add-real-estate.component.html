@@ -99,7 +99,7 @@
         <h3>Bildvorschau</h3>
         <div class="preview-list">
           <div class="preview-item" *ngFor="let pic of newRealEstate.pictures; let i = index">
-            <img [src]="pic" alt="Bild {{i + 1}}" />
+            <img [src]="getPictureUrl(pic)" alt="Bild {{i + 1}}" />
           </div>
         </div>
       </div>

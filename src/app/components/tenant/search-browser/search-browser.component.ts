@@ -26,7 +26,7 @@ export class SearchBrowserComponent implements OnInit {
 
   // Alle Immobilien abrufen
   getAllListings() {
-    this.realEstateService.getAllListings().subscribe({
+    this.realEstateService.getAllListingsByOwner().subscribe({
       next: (response) => {
         this.listings = response; // Speichere die erhaltenen Immobilien in der Liste
       },
