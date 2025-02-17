@@ -43,7 +43,7 @@ export class EditRealEstateComponent implements OnInit {
 
   // Lädt die bestehenden Immobilien-Daten vom Backend
   loadRealEstate(listingId: number) {
-    this.realEstateService.getListingById(listingId).subscribe(
+    this.realEstateService.getListingByUserId(listingId).subscribe(
       (data) => {
         // Falls das Backend die ID nicht liefert, hier ergänzen:
         this.realEstateToEdit = { ...data, real_estate_id: listingId };

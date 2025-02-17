@@ -23,7 +23,7 @@ export class DetailedViewComponent implements OnInit {
     // Hole die Listing-ID aus der URL (zum Beispiel über /tenant/details/:id)
     const listingId = this.route.snapshot.paramMap.get('id');
     if (listingId) {
-      this.realEstateService.getListingById(+listingId).subscribe({
+      this.realEstateService.getListingByRealEstateId(+listingId).subscribe({
         next: (data) => {
           this.listing = data;
         },

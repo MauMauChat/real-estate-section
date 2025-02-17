@@ -11,6 +11,7 @@ export class RealEstateService {
   // Spezifische Endpunkte
   private readonly REAL_ESTATE_ENDPOINT = '/api/immobilien';
   private readonly REQUESTS_ENDPOINT = '/api/immobilien/requests';
+  private  readonly REAL_ESTATE_DETAIL = 'detail';
 
   constructor(private http: HttpClient) {}
 
@@ -39,10 +40,14 @@ export class RealEstateService {
   }
 
   // Ein einzelnes Listing anhand der ID abrufen
-  getListingById(id: number): Observable<any> {
+  getListingByUserId(id: number): Observable<any> {
     return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}/${id}`);
   }
 
+// Ein einzelnes Listing anhand der ID abrufen
+  getListingByRealEstateId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}/${this.REAL_ESTATE_DETAIL}/${id}`);
+  }
   // Neues Listing erstellen
   createListing(data: any): Observable<any> {
     return this.http.post<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`, data);
