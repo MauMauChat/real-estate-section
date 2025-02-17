@@ -6,31 +6,46 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RealEstateService {
-  private apiUrl = 'http://localhost:300';
+  // Gemeinsamer Nenner: Basis-URL der API
+  private readonly BASE_URL = 'http://localhost:3000';
+  // Spezifische Endpunkte
+  private readonly REAL_ESTATE_ENDPOINT = '/api/immobilien';
+  private readonly REQUESTS_ENDPOINT = '/api/immobilien/requests';
 
   constructor(private http: HttpClient) {}
 
-  getAllListings(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  // Beispiel: Alle Listings abrufen
+  getAllListingsBasedOnCriteria(): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`);
   }
 
+  // Anfragen (Requests) abrufen
+  getAllRequestsByRequester(requester_id: number = 1): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}${this.REQUESTS_ENDPOINT}`);
+  }
+
+  // Alle Listings eines bestimmten Eigentümers abrufen
+  getAllListingsByOwner(owner_id: number = 1): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`);
+  }
+
+  // Ein einzelnes Listing anhand der ID abrufen
   getListingById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}/${id}`);
   }
 
+  // Neues Listing erstellen
   createListing(data: any): Observable<any> {
-    return this.http.post<any>("http://localhost:3000/api/immobilien", data);
+    return this.http.post<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}`, data);
   }
+
+  // Bestehendes Listing aktualisieren
   updateListing(data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${data.listing_id}`, data);
+    return this.http.put<any>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}/${data.listing_id}`, data);
   }
 
+  // Listing löschen
   deleteListing(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  // Neue Methode zum Abrufen der Anfragen (Requests)
-  getAllRequests(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);  // Angenommene API-URL für Requests
+    return this.http.delete<void>(`${this.BASE_URL}${this.REAL_ESTATE_ENDPOINT}/${id}`);
   }
 }
